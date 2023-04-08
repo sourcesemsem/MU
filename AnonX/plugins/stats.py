@@ -1,468 +1,307 @@
 import asyncio
-import platform
-from sys import version as pyver
+import time
 
-import psutil
-from pyrogram import __version__ as pyrover
 from pyrogram import filters
-from pyrogram.errors import MessageIdInvalid
-from pyrogram.types import CallbackQuery, InputMediaPhoto, Message
-from pytgcalls.__version__ import __version__ as pytgver
+from pyrogram.types import (InlineKeyboardButton,
+                            InlineKeyboardMarkup, Message)
+from youtubesearchpython.__future__ import VideosSearch
 from strings.filters import command
 import config
-from config import BANNED_USERS, MUSIC_BOT_NAME
-from strings import get_command
-from AnonX import YouTube, app
-from AnonX.core.userbot import assistants
-from AnonX.misc import SUDOERS, pymongodb
-from AnonX.plugins import ALL_MODULES
-from AnonX.utils.database import (get_global_tops,
-                                       get_particulars, get_queries,
+from config import BANNED_USERS
+from config import OWNER_ID
+from strings import get_command, get_string
+from AnonX import Telegram, YouTube, app
+from AnonX.misc import SUDOERS, _boot_
+from AnonX.plugins.playlist import del_plist_msg
+from AnonX.plugins.sudoers import sudoers_list
+from AnonX.utils.database import (add_served_chat,
+                                       add_served_user,
                                        get_served_chats,
-                                       get_served_users, get_sudoers,
-                                       get_top_chats, get_topp_users)
-from AnonX.utils.decorators.language import language, languageCB
-from AnonX.utils.inline.stats import (back_stats_buttons,
-                                           back_stats_markup,
-                                           get_stats_markup,
-                                           overallback_stats_markup,
-                                           stats_buttons,
-                                           top_ten_stats_markup)
+                                       get_served_users,
+                                       blacklisted_chats,
+                                       get_assistant, get_lang,
+                                       get_userss, is_on_off,
+                                       is_served_private_chat)
+from AnonX.utils.decorators.language import LanguageStart
+from AnonX.utils.formatters import get_readable_time
+from AnonX.utils.inline import (help_pannel, private_panel,
+                                     start_pannel)
 
 loop = asyncio.get_running_loop()
 
-# Commands
-GSTATS_COMMAND = get_command("GSTATS_COMMAND")
-STATS_COMMAND = get_command("STATS_COMMAND")
-
 
 @app.on_message(
-    command(STATS_COMMAND)
-    & filters.group
+    filters.command(get_command("START_COMMAND"))
+    & filters.private
+    & ~filters.edited
     & ~BANNED_USERS
 )
-@language
-async def stats_global(client, message: Message, _):
-    upl = stats_buttons(
-        _, True if message.from_user.id in SUDOERS else False
-    )
-    await message.reply_photo(
-        photo=config.STATS_IMG_URL,
-        caption=_["gstats_11"].format(config.MUSIC_BOT_NAME),
-        reply_markup=upl,
-    )
-
-
-@app.on_message(
-    command(GSTATS_COMMAND)
-    & filters.group
-    & ~BANNED_USERS
-)
-@language
-async def gstats_global(client, message: Message, _):
-    mystic = await message.reply_text(_["gstats_1"])
-    stats = await get_global_tops()
-    if not stats:
-        await asyncio.sleep(1)
-        return await mystic.edit(_["gstats_2"])
-
-    def get_stats():
-        results = {}
-        for i in stats:
-            top_list = stats[i]["spot"]
-            results[str(i)] = top_list
-            list_arranged = dict(
-                sorted(
-                    results.items(),
-                    key=lambda item: item[1],
-                    reverse=True,
-                )
+@LanguageStart
+async def start_comm(client, message: Message, _):
+    await add_served_user(message.from_user.id)
+    if len(message.text.split()) > 1:
+        name = message.text.split(None, 1)[1]
+        if name[0:4] == "help":
+            keyboard = help_pannel(_)
+            await message.reply_sticker("CAACAgUAAxkBAAJE8GK4EsoLVZC2SW5W5Q-QAkaoN8f_AAL9BQACiy14VGoQxOCDfE1KKQQ")
+            return await message.reply_photo(
+                       photo=config.START_IMG_URL,
+                       caption=_["help_1"].format(config.SUPPORT_HEHE), reply_markup=keyboard
             )
-        if not results:
-            return mystic.edit(_["gstats_2"])
-        videoid = None
-        co = None
-        for vidid, count in list_arranged.items():
-            if vidid == "telegram":
-                continue
-            else:
-                videoid = vidid
-                co = count
-            break
-        return videoid, co
-
-    try:
-        videoid, co = await loop.run_in_executor(None, get_stats)
-    except Exception as e:
-        print(e)
-        return
-    (
-        title,
-        duration_min,
-        duration_sec,
-        thumbnail,
-        vidid,
-    ) = await YouTube.details(videoid, True)
-    title = title.title()
-    final = f"ᴛᴏᴩ ᴍᴏsᴛ ᴩʟᴀʏᴇᴅ ᴛʀᴀᴄᴋ ᴏɴ {MUSIC_BOT_NAME}\n\n**ᴛɪᴛʟᴇ:** {title}\n\nᴩʟᴀʏᴇᴅ** {co} **ᴛɪᴍᴇs."
-    upl = get_stats_markup(
-        _, True if message.from_user.id in SUDOERS else False
-    )
-    await app.send_photo(
-        message.chat.id,
-        photo=thumbnail,
-        caption=final,
-        reply_markup=upl,
-    )
-    await mystic.delete()
-
-
-@app.on_callback_query(filters.regex("GetStatsNow") & ~BANNED_USERS)
-@languageCB
-async def top_users_ten(client, CallbackQuery: CallbackQuery, _):
-    chat_id = CallbackQuery.message.chat.id
-    callback_data = CallbackQuery.data.strip()
-    what = callback_data.split(None, 1)[1]
-    upl = back_stats_markup(_)
-    try:
-        await CallbackQuery.answer()
-    except:
-        pass
-    mystic = await CallbackQuery.edit_message_text(
-        _["gstats_3"].format(
-            f"of {CallbackQuery.message.chat.title}"
-            if what == "Here"
-            else what
-        )
-    )
-    if what == "Tracks":
-        stats = await get_global_tops()
-    elif what == "Chats":
-        stats = await get_top_chats()
-    elif what == "Users":
-        stats = await get_topp_users()
-    elif what == "Here":
-        stats = await get_particulars(chat_id)
-    if not stats:
-        await asyncio.sleep(1)
-        return await mystic.edit(_["gstats_2"], reply_markup=upl)
-    queries = await get_queries()
-
-    def get_stats():
-        results = {}
-        for i in stats:
-            top_list = (
-                stats[i]
-                if what in ["Chats", "Users"]
-                else stats[i]["spot"]
+        if name[0:4] == "song":
+            return await message.reply_text(_["song_2"])
+        if name[0:3] == "sta":
+            m = await message.reply_text(
+                f"🥱 احضار بيناتك الخاصه من {config.MUSIC_BOT_NAME} سيرفر."
             )
-            results[str(i)] = top_list
-            list_arranged = dict(
-                sorted(
-                    results.items(),
-                    key=lambda item: item[1],
-                    reverse=True,
-                )
-            )
-        if not results:
-            return mystic.edit(_["gstats_2"], reply_markup=upl)
-        msg = ""
-        limit = 0
-        total_count = 0
-        if what in ["Tracks", "Here"]:
-            for items, count in list_arranged.items():
-                total_count += count
-                if limit == 10:
-                    continue
-                limit += 1
-                details = stats.get(items)
-                title = (details["title"][:35]).title()
-                if items == "telegram":
-                    msg += f"🍒 [ᴛᴇʟᴇɢʀᴀᴍ ᴍᴇᴅɪᴀ](https://t.me/DevilsHeavenMF) ** ᴩʟᴀʏᴇᴅ {count} ᴛɪᴍᴇs**\n\n"
-                else:
-                    msg += f"📌 [{title}](https://www.youtube.com/watch?v={items}) ** ᴩʟᴀʏᴇᴅ {count} ᴛɪᴍᴇs**\n\n"
+            stats = await get_userss(message.from_user.id)
+            tot = len(stats)
+            if not stats:
+                await asyncio.sleep(1)
+                return await m.edit(_["ustats_1"])
 
-            temp = (
-                _["gstats_4"].format(
-                    queries,
-                    config.MUSIC_BOT_NAME,
-                    len(stats),
-                    total_count,
-                    limit,
-                )
-                if what == "Tracks"
-                else _["gstats_7"].format(
-                    len(stats), total_count, limit
-                )
-            )
-            msg = temp + msg
-        return msg, list_arranged
+            def get_stats():
+                msg = ""
+                limit = 0
+                results = {}
+                for i in stats:
+                    top_list = stats[i]["spot"]
+                    results[str(i)] = top_list
+                    list_arranged = dict(
+                        sorted(
+                            results.items(),
+                            key=lambda item: item[1],
+                            reverse=True,
+                        )
+                    )
+                if not results:
+                    return m.edit(_["ustats_1"])
+                tota = 0
+                videoid = None
+                for vidid, count in list_arranged.items():
+                    tota += count
+                    if limit == 10:
+                        continue
+                    if limit == 0:
+                        videoid = vidid
+                    limit += 1
+                    details = stats.get(vidid)
+                    title = (details["title"][:35]).title()
+                    if vidid == "telegram":
+                        msg += f"🔗[ᴛᴇʟᴇɢʀᴀᴍ ᴍᴇᴅɪᴀ](https://t.me/DevilsHeavenMF) ** ᴩʟᴀʏᴇᴅ {count} ᴛɪᴍᴇs**\n\n"
+                    else:
+                        msg += f"🔗 [{title}](https://www.youtube.com/watch?v={vidid}) ** played {count} times**\n\n"
+                msg = _["ustats_2"].format(tot, tota, limit) + msg
+                return videoid, msg
 
-    try:
-        msg, list_arranged = await loop.run_in_executor(
-            None, get_stats
-        )
-    except Exception as e:
-        print(e)
-        return
-    limit = 0
-    if what in ["Users", "Chats"]:
-        for items, count in list_arranged.items():
-            if limit == 10:
-                break
             try:
-                extract = (
-                    (await app.get_users(items)).first_name
-                    if what == "Users"
-                    else (await app.get_chat(items)).title
+                videoid, msg = await loop.run_in_executor(
+                    None, get_stats
                 )
-                if extract is None:
-                    continue
-                await asyncio.sleep(0.5)
+            except Exception as e:
+                print(e)
+                return
+            thumbnail = await YouTube.thumbnail(videoid, True)
+            await m.delete()
+            await message.reply_photo(photo=thumbnail, caption=msg)
+            return
+        if name[0:3] == "sud":
+            await sudoers_list(client=client, message=message, _=_)
+            if await is_on_off(config.LOG):
+                sender_id = message.from_user.id
+                sender_name = message.from_user.first_name
+                return await app.send_message(
+                    config.LOG_GROUP_ID,
+                    f"{message.from_user.mention} البوت بدا ليفحص <code>sᴜᴅᴏʟɪsᴛ</code>\n\n**ᴜsᴇʀ ɪᴅ:** {sender_id}\n**ᴜsᴇʀɴᴀᴍᴇ:** {sender_name}",
+                )
+            return
+        if name[0:3] == "lyr":
+            query = (str(name)).replace("lyrics_", "", 1)
+            lyrical = config.lyrical
+            lyrics = lyrical.get(query)
+            if lyrics:
+                return await Telegram.send_split_text(message, lyrics)
+            else:
+                return await message.reply_text(
+                    "ғᴀɪʟᴇᴅ ᴛᴏ ɢᴇᴛ ʟʏʀɪᴄs."
+                )
+        if name[0:3] == "del":
+            await del_plist_msg(client=client, message=message, _=_)
+        if name == "verify":
+            await message.reply_text(f"هاي {message.from_user.first_name},\nᴛشكرا لأنك وثقت فسكوفي {config.MUSIC_BOT_NAME}, الان يمكنك ان تستخدمني.")
+            if await is_on_off(config.LOG):
+                sender_id = message.from_user.id
+                sender_name = message.from_user.first_name
+                return await app.send_message(
+                    config.LOG_GROUP_ID,
+                    f"{message.from_user.mention} البوت بدا  <code>ᴠᴇʀɪғʏ ʜɪᴍsᴇʟғ</code>\n\n**ᴜsᴇʀ ɪᴅ:** {sender_id}\n**ᴜsᴇʀɴᴀᴍᴇ:** {sender_name}",
+                )
+            return
+        if name[0:3] == "inf":
+            m = await message.reply_text("🔎")
+            query = (str(name)).replace("info_", "", 1)
+            query = f"https://www.youtube.com/watch?v={query}"
+            results = VideosSearch(query, limit=1)
+            for result in (await results.next())["result"]:
+                title = result["title"]
+                duration = result["duration"]
+                views = result["viewCount"]["short"]
+                thumbnail = result["thumbnails"][0]["url"].split("?")[
+                    0
+                ]
+                channellink = result["channel"]["link"]
+                channel = result["channel"]["name"]
+                link = result["link"]
+                published = result["publishedTime"]
+            searched_text = f"""
+😲**معلومات المسارات**😲
+
+📌**عنوان:** {title}
+
+⏳**المدة:** {duration} ᴍɪɴᴜᴛᴇs
+👀**المشاهدات:** `{views}`
+⏰**نشرت في:** {published}
+🎥**القناة:** {channel}
+📎**رابط القناة:** [ᴠɪsɪᴛ ᴄʜᴀɴɴᴇʟ]({channellink})
+🔗**الرابط:** [ᴡᴀᴛᴄʜ ᴏɴ ʏᴏᴜᴛᴜʙᴇ]({link})
+
+💖 البحث يعمل بواسطة {config.MUSIC_BOT_NAME}"""
+            key = InlineKeyboardMarkup(
+                [
+                    [
+                        InlineKeyboardButton(
+                            text="• ʏᴏᴜᴛᴜʙᴇ •", url=f"{link}"
+                        ),
+                        InlineKeyboardButton(
+                            text="ѕᴏụʀᴄᴇ ᴀʟᴍᴏʀᴛᴀɢᴇʟ•", url="https://t.me/AlmortagelTech"
+                        ),
+                    ],
+                ]
+            )
+            await m.delete()
+            await app.send_photo(
+                message.chat.id,
+                photo=thumbnail,
+                caption=searched_text,
+                parse_mode="markdown",
+                reply_markup=key,
+            )
+            if await is_on_off(config.LOG):
+                sender_id = message.from_user.id
+                sender_name = message.from_user.first_name
+                return await app.send_message(
+                    config.LOG_GROUP_ID,
+                    f"{message.from_user.mention} البوت بدا ليفحص <code>ᴛʀᴀᴄᴋ ɪɴғᴏʀᴍᴀᴛɪᴏɴ</code>\n\n**ᴜsᴇʀ ɪᴅ:** {sender_id}\n**ᴜsᴇʀɴᴀᴍᴇ:** {sender_name}",
+                )
+    else:
+        try:
+            await app.resolve_peer(OWNER_ID[0])
+            OWNER = OWNER_ID[0]
+        except:
+            OWNER = None
+        out = private_panel(_, app.username, OWNER)
+        if config.START_IMG_URL:
+            try:
+                await message.reply_sticker("CAACAgUAAxkBAAIjTGKPYCq3keRZgNbshxtJ5k7H609OAAIZBgACYAF5VIerYoMcSln8JAQ")
+                await message.reply_photo(
+                    photo=config.START_IMG_URL,
+                    caption=_["start_2"].format(
+                        config.MUSIC_BOT_NAME
+                    ),
+                    reply_markup=InlineKeyboardMarkup(out),
+                )
             except:
-                continue
-            limit += 1
-            msg += f"💖 `{extract}` ᴩʟᴀʏᴇᴅ {count} ᴛɪᴍᴇs ᴏɴ ʙᴏᴛ.\n\n"
-        temp = (
-            _["gstats_5"].format(limit, MUSIC_BOT_NAME)
-            if what == "Chats"
-            else _["gstats_6"].format(limit, MUSIC_BOT_NAME)
-        )
-        msg = temp + msg
-    med = InputMediaPhoto(media=config.GLOBAL_IMG_URL, caption=msg)
-    try:
-        await CallbackQuery.edit_message_media(
-            media=med, reply_markup=upl
-        )
-    except MessageIdInvalid:
-        await CallbackQuery.message.reply_photo(
-            photo=config.GLOBAL_IMG_URL, caption=msg, reply_markup=upl
-        )
-
-
-@app.on_callback_query(filters.regex("TopOverall") & ~BANNED_USERS)
-@languageCB
-async def overall_stats(client, CallbackQuery, _):
-    callback_data = CallbackQuery.data.strip()
-    what = callback_data.split(None, 1)[1]
-    if what != "s":
-        upl = overallback_stats_markup(_)
-    else:
-        upl = back_stats_buttons(_)
-    try:
-        await CallbackQuery.answer()
-    except:
-        pass
-    await CallbackQuery.edit_message_text(_["gstats_8"])
-    served_chats = len(await get_served_chats())
-    served_users = len(await get_served_users())
-    total_queries = await get_queries()
-    blocked = len(BANNED_USERS)
-    sudoers = len(SUDOERS)
-    mod = len(ALL_MODULES)
-    assistant = len(assistants)
-    playlist_limit = config.SERVER_PLAYLIST_LIMIT
-    fetch_playlist = config.PLAYLIST_FETCH_LIMIT
-    song = config.SONG_DOWNLOAD_DURATION
-    play_duration = config.DURATION_LIMIT_MIN
-    if config.AUTO_LEAVING_ASSISTANT == str(True):
-        ass = "ʏᴇs"
-    else:
-        ass = "ɴᴏ"
-    cm = config.CLEANMODE_DELETE_MINS
-    text = f"""**ʙᴏᴛ's sᴛᴀᴛs ᴀɴᴅ ɪɴғᴏ:**
-
-**ᴍᴏᴅᴜʟᴇs:** {mod}
-**ᴄʜᴀᴛs:** {served_chats} 
-**ᴜsᴇʀs:** {served_users} 
-**ʙʟᴏᴄᴋᴇᴅ:** {blocked} 
-**sᴜᴅᴏᴇʀs:** {sudoers} 
-    
-**ǫᴜᴇʀɪᴇs:** {total_queries} 
-**ᴀssɪsᴛᴀɴᴛs:** {assistant}
-**ᴀss ᴀᴜᴛᴏ ʟᴇᴀᴠᴇ:** {ass}
-**ᴄʟᴇᴀɴᴍᴏᴅᴇ:** {cm} ᴍɪɴᴜᴛᴇs
-
-**ᴅᴜʀᴀᴛɪᴏɴ ʟɪᴍɪᴛ:** {play_duration} ᴍɪɴᴜᴛᴇs
-**ᴅᴏᴡɴʟᴏᴀᴅ ʟɪᴍɪᴛ:** {song} ᴍɪɴᴜᴛᴇs
-**ᴩʟᴀʏʟɪsᴛ ʟɪᴍɪᴛ:** {playlist_limit}
-**ᴩʟᴀʏʟɪsᴛ ᴩʟᴀʏ ʟɪᴍɪᴛ:** {fetch_playlist}"""
-    med = InputMediaPhoto(media=config.STATS_IMG_URL, caption=text)
-    try:
-        await CallbackQuery.edit_message_media(
-            media=med, reply_markup=upl
-        )
-    except MessageIdInvalid:
-        await CallbackQuery.message.reply_photo(
-            photo=config.STATS_IMG_URL, caption=text, reply_markup=upl
-        )
-
-
-@app.on_callback_query(filters.regex("bot_stats_sudo"))
-@languageCB
-async def overall_stats(client, CallbackQuery, _):
-    if CallbackQuery.from_user.id not in SUDOERS:
-        return await CallbackQuery.answer(
-            "ᴏɴʟʏ ғᴏʀ sᴜᴅᴏ ᴜsᴇʀs.", show_alert=True
-        )
-    callback_data = CallbackQuery.data.strip()
-    what = callback_data.split(None, 1)[1]
-    if what != "s":
-        upl = overallback_stats_markup(_)
-    else:
-        upl = back_stats_buttons(_)
-    try:
-        await CallbackQuery.answer()
-    except:
-        pass
-    await CallbackQuery.edit_message_text(_["gstats_8"])
-    sc = platform.system()
-    p_core = psutil.cpu_count(logical=False)
-    t_core = psutil.cpu_count(logical=True)
-    ram = (
-        str(round(psutil.virtual_memory().total / (1024.0**3)))
-        + " ɢʙ"
-    )
-    try:
-        cpu_freq = psutil.cpu_freq().current
-        if cpu_freq >= 1000:
-            cpu_freq = f"{round(cpu_freq / 1000, 2)}ɢʜᴢ"
+                await message.reply_text(
+                    _["start_2"].format(config.MUSIC_BOT_NAME),
+                    reply_markup=InlineKeyboardMarkup(out),
+                )
         else:
-            cpu_freq = f"{round(cpu_freq, 2)}ᴍʜᴢ"
-    except:
-        cpu_freq = "Unable to Fetch"
-    hdd = psutil.disk_usage("/")
-    total = hdd.total / (1024.0**3)
-    total = str(total)
-    used = hdd.used / (1024.0**3)
-    used = str(used)
-    free = hdd.free / (1024.0**3)
-    free = str(free)
-    mod = len(ALL_MODULES)
-    db = pymongodb
-    call = db.command("dbstats")
-    datasize = call["dataSize"] / 1024
-    datasize = str(datasize)
-    storage = call["storageSize"] / 1024
-    objects = call["objects"]
-    collections = call["collections"]
-    status = db.command("serverStatus")
-    query = status["opcounters"]["query"]
-    mongouptime = status["uptime"] / 86400
-    mongouptime = str(mongouptime)
-    served_chats = len(await get_served_chats())
-    served_users = len(await get_served_users())
-    total_queries = await get_queries()
-    blocked = len(BANNED_USERS)
-    sudoers = len(await get_sudoers())
-    text = f""" **ʙᴏᴛ's sᴛᴀᴛs ᴀɴᴅ ɪɴғᴏ:**
-
-       <b><u>ʜᴀʀᴅᴡᴀʀᴇ</b><u/>
-**ᴍᴏᴅᴜʟᴇs:** {mod}
-**ᴩʟᴀᴛғᴏʀᴍ:** {sc}
-**ʀᴀᴍ:** {ram}
-**ᴩʜʏsɪᴄᴀʟ ᴄᴏʀᴇs:** {p_core}
-**ᴛᴏᴛᴀʟ ᴄᴏʀᴇs:** {t_core}
-**ᴄᴩᴜ ғʀᴇǫᴜᴇɴᴄʏ:** {cpu_freq}
-
-       <b><u>sᴏғᴛᴡᴀʀᴇ</b><u/>
-**ᴩʏᴛʜᴏɴ :** {pyver.split()[0]}
-**ᴩʏʀᴏɢʀᴀᴍ :** {pyrover}
-**ᴩʏ-ᴛɢᴄᴀʟʟs :** {pytgver}
-
-        <b><u>sᴛᴏʀᴀɢᴇ</b><u/>
-**ᴀᴠᴀɪʟᴀʙʟᴇ:** {total[:4]} GiB
-**ᴜsᴇᴅ:** {used[:4]} GiB
-**ғʀᴇᴇ:** {free[:4]} GiB
-        
-      <b><u>ᴄᴜʀʀᴇɴᴛ sᴛᴀᴛs</b><u/>
-**ᴄʜᴀᴛs:** {served_chats} 
-**ᴜsᴇʀs:** {served_users} 
-**ʙʟᴏᴄᴋᴇᴅ:** {blocked} 
-**sᴜᴅᴏᴇʀs:** {sudoers} 
-
-      <b><u>ᴍᴏɴɢᴏ ᴅᴀᴛᴀʙᴀsᴇ</b><u/>
-**ᴜᴩᴛɪᴍᴇ:** {mongouptime[:4]} Days
-**sɪᴢᴇ:** {datasize[:6]} Mb
-**sᴛᴏʀᴀɢᴇ:** {storage} Mb
-**ᴄᴏʟʟᴇᴄᴛɪᴏɴs:** {collections}
-**ᴋᴇʏs:** {objects}
-**ǫᴜᴇʀɪᴇs:** `{query}`
-**ʙᴏᴛ ǫᴜᴇʀɪᴇs:** `{total_queries} `
-    """
-    med = InputMediaPhoto(media=config.STATS_IMG_URL, caption=text)
-    try:
-        await CallbackQuery.edit_message_media(
-            media=med, reply_markup=upl
-        )
-    except MessageIdInvalid:
-        await CallbackQuery.message.reply_photo(
-            photo=config.STATS_IMG_URL, caption=text, reply_markup=upl
-        )
+            await message.reply_text(
+                _["start_2"].format(config.MUSIC_BOT_NAME),
+                reply_markup=InlineKeyboardMarkup(out),
+            )
+        if await is_on_off(config.LOG):
+            sender_id = message.from_user.id
+            sender_name = message.from_user.first_name
+            return await app.send_message(
+                config.LOG_GROUP_ID,
+                f"{message.from_user.mention} البوت بدا .\n\n**ᴜsᴇʀ ɪᴅ:** {sender_id}\n**ᴜsᴇʀɴᴀᴍᴇ:** {sender_name}",
+            )
 
 
-@app.on_callback_query(
-    filters.regex(pattern=r"^(TOPMARKUPGET|GETSTATS|GlobalStats)$")
+@app.on_message(
+    filters.command(get_command("START_COMMAND"))
+    & filters.group
+    & ~filters.edited
     & ~BANNED_USERS
 )
-@languageCB
-async def back_buttons(client, CallbackQuery, _):
-    try:
-        await CallbackQuery.answer()
-    except:
-        pass
-    command = CallbackQuery.matches[0].group(1)
-    if command == "TOPMARKUPGET":
-        upl = top_ten_stats_markup(_)
-        med = InputMediaPhoto(
-            media=config.GLOBAL_IMG_URL,
-            caption=_["gstats_9"],
-        )
+@LanguageStart
+async def testbot(client, message: Message, _):
+    OWNER = OWNER_ID[0]
+    out = start_pannel(_, app.username, OWNER)
+    return await message.reply_photo(
+               photo=config.START_IMG_URL,
+               caption=_["start_1"].format(
+            message.chat.title, config.MUSIC_BOT_NAME
+        ),
+        reply_markup=InlineKeyboardMarkup(out),
+    )
+
+
+welcome_group = 2
+
+
+@app.on_message(filters.new_chat_members, group=welcome_group)
+async def welcome(client, message: Message):
+    chat_id = message.chat.id
+    if config.PRIVATE_BOT_MODE == str(True):
+        if not await is_served_private_chat(message.chat.id):
+            await message.reply_text(
+                "**خاص بوت الموسيقى**\n\nفقط للمحادثات المصرح بها من قبل مالكي الحساب، يرجى الطلب من مالك الحساب في الرسائل الخاصة للمصادقة على محادثتك، وإذا لم ترغب في ذلك، فافعل ما تريد لأني سأغادر.."
+            )
+            return await app.leave_chat(message.chat.id)
+    else:
+        await add_served_chat(chat_id)
+    for member in message.new_chat_members:
         try:
-            await CallbackQuery.edit_message_media(
-                media=med, reply_markup=upl
-            )
-        except MessageIdInvalid:
-            await CallbackQuery.message.reply_photo(
-                photo=config.GLOBAL_IMG_URL,
-                caption=_["gstats_9"],
-                reply_markup=upl,
-            )
-    if command == "GlobalStats":
-        upl = get_stats_markup(
-            _,
-            True if CallbackQuery.from_user.id in SUDOERS else False,
-        )
-        med = InputMediaPhoto(
-            media=config.GLOBAL_IMG_URL,
-            caption=_["gstats_10"].format(config.MUSIC_BOT_NAME),
-        )
-        try:
-            await CallbackQuery.edit_message_media(
-                media=med, reply_markup=upl
-            )
-        except MessageIdInvalid:
-            await CallbackQuery.message.reply_photo(
-                photo=config.GLOBAL_IMG_URL,
-                caption=_["gstats_10"].format(config.MUSIC_BOT_NAME),
-                reply_markup=upl,
-            )
-    if command == "GETSTATS":
-        upl = stats_buttons(
-            _,
-            True if CallbackQuery.from_user.id in SUDOERS else False,
-        )
-        med = InputMediaPhoto(
-            media=config.STATS_IMG_URL,
-            caption=_["gstats_11"].format(config.MUSIC_BOT_NAME),
-        )
-        try:
-            await CallbackQuery.edit_message_media(
-                media=med, reply_markup=upl
-            )
-        except MessageIdInvalid:
-            await CallbackQuery.message.reply_photo(
-                photo=config.STATS_IMG_URL,
-                caption=_["gstats_11"].format(config.MUSIC_BOT_NAME),
-                reply_markup=upl,
-            )
+            language = await get_lang(message.chat.id)
+            _ = get_string(language)
+            if member.id == app.id:
+                chat_type = message.chat.type
+                if chat_type != "supergroup":
+                    await message.reply_text(_["start_6"])
+                    return await app.leave_chat(message.chat.id)
+                if chat_id in await blacklisted_chats():
+                    await message.reply_text(
+                        _["start_7"].format(
+                            f"https://t.me/{app.username}?start=sudolist"
+                        )
+                    )
+                    return await app.leave_chat(chat_id)
+                userbot = await get_assistant(message.chat.id)
+                OWNER = OWNER_ID[0]
+                out = start_pannel(_, app.username, OWNER)
+                await message.reply_photo(
+                    photo=config.START_IMG_URL,
+                    caption=_["start_3"].format(
+                        config.MUSIC_BOT_NAME,
+                        userbot.username,
+                        userbot.id,
+                    ),
+                    reply_markup=InlineKeyboardMarkup(out),
+                )
+            if member.id in config.OWNER_ID:
+                return await message.reply_text(
+                    _["start_4"].format(
+                        config.MUSIC_BOT_NAME, member.mention
+                    )
+                )
+            if member.id in SUDOERS:
+                return await message.reply_text(
+                    _["start_5"].format(
+                        config.MUSIC_BOT_NAME, member.mention
+                    )
+                )
+            return
+        except:
+            return
