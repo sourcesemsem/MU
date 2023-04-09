@@ -32,7 +32,7 @@ async def huhh(client: Client, message: Message):
                         "⌞ѕᴏụʀᴄᴇ ᴀʟᴍᴏʀᴛᴀɢᴇʟ⌝⚡️", url=f"https://t.me/AlmortagelTech"),
                 ],[
                     InlineKeyboardButton(
-                        "𝐀𝐃𝐃 𝐌𝐄💞", url=f"https://t.me/{BOT_USERNAME}?startgroup=true"),
+                        "للتنصيب راسلني", url=f"https://t.me/ALMORTAGEL_12"),
                 ],
 
             ]
