@@ -21,7 +21,7 @@ from random import  choice, randint
 async def huhh(client: Client, message: Message):
     await message.reply_photo(
         photo=f"https://telegra.ph/file/14c7948ad180050fe16e4.jpg",
-        caption=f"""╭═★⊷⌯⧼[⌞ ѕᴏụʀᴄᴇ ᴀʟᴍᴏʀᴛᴀɢᴇʟ⌝](https://t.me/AlmortagelTech)⧽⌯⊶★═╮\n★‹ [⌞ ѕᴏụʀᴄᴇ ᴀʟᴍᴏʀᴛᴀɢᴇʟ⌝𝐀](https://t.me/AlmortagelTech)\n★‹ [ALMORTAGELِ](https://t.me/ALMORTAGEL_12)\n╰═★⊷⌯⧼[⌞ ѕᴏụʀᴄᴇ ᴀʟᴍᴏʀᴛᴀɢᴇʟ⌝](https://t.me/AlmortagelTech)⧽⌯⊶★═╯\n ⍟ Welcome to ѕᴏụʀᴄᴇ ᴀʟᴍᴏʀᴛᴀɢᴇʟ""",
+        caption=f"""╭═★⊷⌯⧼[⌞ѕᴏụʀᴄᴇ ᴀʟᴍᴏʀᴛᴀɢᴇʟ⌝](https://t.me/AlmortagelTech)⧽⌯⊶★═╮\n★‹ [⌞ѕᴏụʀᴄᴇ ᴀʟᴍᴏʀᴛᴀɢᴇʟ⌝](https://t.me/AlmortagelTech)\n★‹ [ALMORTAGELِ](https://t.me/ALMORTAGEL_12)\n╰═★⊷⌯⧼[⌞ ѕᴏụʀᴄᴇ ᴀʟᴍᴏʀᴛᴀɢᴇʟ⌝](https://t.me/AlmortagelTech)⧽⌯⊶★═╯\n ⍟ Welcome to ѕᴏụʀᴄᴇ ᴀʟᴍᴏʀᴛᴀɢᴇʟ""",
         reply_markup=InlineKeyboardMarkup(
             [
                 [
@@ -29,10 +29,10 @@ async def huhh(client: Client, message: Message):
                         "ALMORTAGEL", url=f"https://t.me/ALMORTAGEL_12"), 
                 ],[
                     InlineKeyboardButton(
-                        "⌞ ѕᴏụʀᴄᴇ ᴀʟᴍᴏʀᴛᴀɢᴇʟ⌝⚡️", url=f"https://t.me/AlmortagelTech"),
+                        "⌞ѕᴏụʀᴄᴇ ᴀʟᴍᴏʀᴛᴀɢᴇʟ⌝⚡️", url=f"https://t.me/AlmortagelTech"),
                 ],[
                     InlineKeyboardButton(
-                        "𝐀𝐃𝐃 𝐌𝐄💞", url=f"https://t.me/Almortagel_music_bot?startgroup=true"),
+                        "𝐀𝐃𝐃 𝐌𝐄💞", url=f"https://t.me/{BOT_USERNAME}?startgroup=true"),
                 ],
 
             ]
