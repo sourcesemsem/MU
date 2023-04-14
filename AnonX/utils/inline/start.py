@@ -30,13 +30,8 @@ def private_panel(_, BOT_USERNAME, OWNER: Union[bool, int] = None):
     buttons = [
         [
             InlineKeyboardButton(
-                text="اضغط لاضافتي لمجموعتك ✅",
-                url=f"https://t.me/{BOT_USERNAME}?startgroup=true",
-            )
-        ],
-        [
-            InlineKeyboardButton(
-                text="🤖- الاوامر -🤖", callback_data="settings_back_helper"
+                text="‹  اوامر التشغيل  ›⁩",
+                callback_data=f"settings_back_helper",
             )
         ],
         [
@@ -48,8 +43,14 @@ def private_panel(_, BOT_USERNAME, OWNER: Union[bool, int] = None):
             )
         ],
         [
+
             InlineKeyboardButton(
-                text="‹ مطور سورس سيمو ›⁩", url=f"https://t.me/DEV_SAMIR"
+                text="‹ مطور سورس سيمو ›⁩", ulr="https://t.me/DEV_SAMIR"
+            )
+        ],
+        [
+            InlineKeyboardButton(
+                text=""اضغط لاضافتي لمجموعتك ✅"", url=f"https://t.me/{BOT_USERNAME}?startgroup=true"
             )
         ],
      ]
