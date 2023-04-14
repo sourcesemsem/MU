@@ -48,8 +48,8 @@ class Userbot(Client):
         if config.STRING1:
             await self.one.start()
             try:
-                await self.one.join_chat("AlmortagelTech2")
-                await self.one.join_chat("AlmortagelTech")
+                await self.one.join_chat("FTTUTT0")
+                await self.one.join_chat("FTTUTY")
             except:
                 pass
             assistants.append(1)
@@ -79,8 +79,8 @@ class Userbot(Client):
         if config.STRING2:
             await self.two.start()
             try:
-                await self.two.join_chat("AlmortagelTech2")
-                await self.two.join_chat("AlmortagelTech")
+                await self.two.join_chat("FTTUTT0")
+                await self.two.join_chat("FTTUTY")
             except:
                 pass
             assistants.append(2)
@@ -110,8 +110,8 @@ class Userbot(Client):
         if config.STRING3:
             await self.three.start()
             try:
-                await self.three.join_chat("AlmortagelTech2")
-                await self.three.join_chat("AlmortagelTech")
+                await self.three.join_chat("FTTUTT0")
+                await self.three.join_chat("FTTUTY")
             except:
                 pass
             assistants.append(3)
@@ -141,8 +141,8 @@ class Userbot(Client):
         if config.STRING4:
             await self.four.start()
             try:
-                await self.four.join_chat("AlmortagelTech2")
-                await self.four.join_chat("AlmortagelTech")
+                await self.four.join_chat("FTTUTT0")
+                await self.four.join_chat("FTTUTY")
             except:
                 pass
             assistants.append(4)
@@ -172,8 +172,8 @@ class Userbot(Client):
         if config.STRING5:
             await self.five.start()
             try:
-                await self.five.join_chat("AlmortagelTech2")
-                await self.five.join_chat("AlmortagelTech")
+                await self.five.join_chat("FTTUTT0")
+                await self.five.join_chat("FTTUTY")
             except:
                 pass
             assistants.append(5)
