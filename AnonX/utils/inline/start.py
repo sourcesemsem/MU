@@ -30,12 +30,7 @@ def private_panel(_, BOT_USERNAME, OWNER: Union[bool, int] = None):
     buttons = [
         [
             InlineKeyboardButton(
-                text="🗒 الاوامر", callback_data="settings_back_helper"
-            )
-        ],
-        [
-            InlineKeyboardButton(
-                text="‹ مطور سورس سيمو ›⁩", url="https://t.me/DEV_SAMIR"
+                text="‹ مطور سورس سيمو ›⁩", callback_data="settings_back_helper"
             )
         ],
         [
