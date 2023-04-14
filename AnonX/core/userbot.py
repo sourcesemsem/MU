@@ -69,7 +69,7 @@ class Userbot(Client):
             )
             try:
                 await self.one.send_message(
-                    config.LOG_GROUP_ID, f"** تم تنصيب المساعد علي سورس سيمو .**"
+                    config.LOG_GROUP_ID, f"** تم تنصيب المساعد علي سورس سمير .**"
                 )
             except:
                 LOGGER(__name__).error(
@@ -97,7 +97,7 @@ class Userbot(Client):
                 self.two.name = get_me.first_name
             try:
                 await self.two.send_message(
-                    config.LOG_GROUP_ID, f"** تم تنصيب المساعد علي سورس سيمو .**"
+                    config.LOG_GROUP_ID, f"** تم تنصيب المساعد علي سورس سمير .**"
                 )
             except:
                 LOGGER(__name__).error(
@@ -128,7 +128,7 @@ class Userbot(Client):
                 self.three.name = get_me.first_name
             try:
                 await self.three.send_message(
-                    config.LOG_GROUP_ID, f"** تم تنصيب المساعد علي سورس سيمو .**"
+                    config.LOG_GROUP_ID, f"** تم تنصيب المساعد علي سورس سمير .**"
                 )
             except:
                 LOGGER(__name__).error(
@@ -159,7 +159,7 @@ class Userbot(Client):
                 self.four.name = get_me.first_name
             try:
                 await self.four.send_message(
-                    config.LOG_GROUP_ID, f"** تم تنصيب المساعد علي سورس سيمو .**"
+                    config.LOG_GROUP_ID, f"** تم تنصيب المساعد علي سورس سمير .**"
                 )
             except:
                 LOGGER(__name__).error(
@@ -190,7 +190,7 @@ class Userbot(Client):
                 self.five.name = get_me.first_name
             try:
                 await self.five.send_message(
-                    config.LOG_GROUP_ID, f"** تم تنصيب المساعد علي سورس سيمو .**"
+                    config.LOG_GROUP_ID, f"** تم تنصيب المساعد علي سورس سمير .**"
                 )
             except:
                 LOGGER(__name__).error(
