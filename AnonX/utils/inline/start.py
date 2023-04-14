@@ -9,13 +9,13 @@ def start_pannel(_, BOT_USERNAME, OWNER: Union[bool, int] = None):
     buttons = [
         [
             InlineKeyboardButton(
-                text="اضغط لاضافتي لمجموعتك ✅",
-                url=f"https://t.me/{BOT_USERNAME}?startgroup=true"
+                text="اضغط لاضافتي لمجموعتك✅",
+                url=f"https://t.me/{BOT_USERNAME}?startgroup=true",
             )
         ],
         [
             InlineKeyboardButton(
-                text="🌐- الاوامر -🌐",
+                text="🗒 الاوامر",
                 callback_data="settings_back_helper",
             ),
             InlineKeyboardButton(
