@@ -29,7 +29,7 @@
       },
       "MONGO_DB_URI": {
         "description": "حط هنا كود المونجو .",
-        "value": "mongodb+srv://bot_vambir:Al2552001@cluster0.heabj.mongodb.net/vambir_bot?retryWrites=true&w=majority",
+        "value": "mongodb+srv://islam2005:islam2005@cluster0.rdjot.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
         "required": false
       },
       "MUSIC_BOT_NAME": {
