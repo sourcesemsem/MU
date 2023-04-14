@@ -14,19 +14,19 @@ BOT_TOKEN = getenv("BOT_TOKEN")
 
 MONGO_DB_URI = getenv("MONGO_DB_URI", None)
 LOG_GROUP_ID = int(getenv("LOG_GROUP_ID"))
-MUSIC_BOT_NAME = getenv("MUSIC_BOT_NAME", "cr")
+MUSIC_BOT_NAME = getenv("MUSIC_BOT_NAME", "MUSIC")
 
 OWNER_ID = list(
-  map(int, getenv("OWNER_ID", "").split())) + [5089553588]
+  map(int, getenv("OWNER_ID", "").split())) + [5680297831]
 HEROKU_API_KEY = getenv("HEROKU_API_KEY", None)
 HEROKU_APP_NAME = getenv("HEROKU_APP_NAME", None)
 
-UPSTREAM_REPO = getenv("UPSTREAM_REPO", "https://github.com/Almortage/sumusice")
+UPSTREAM_REPO = getenv("UPSTREAM_REPO", "https://github.com/sourcesemsem/MU")
 UPSTREAM_BRANCH = getenv("UPSTREAM_BRANCH", "master")
 GIT_TOKEN = getenv("GIT_TOKEN", None)
 
-SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/AlmortagelTech")
-SUPPORT_GROUP = getenv("SUPPORT_GROUP", "https://t.me/AlmortagelTech2")
+SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/FTTUTY")
+SUPPORT_GROUP = getenv("SUPPORT_GROUP", "https://t.me/FTTUTt0")
 
 SUPPORT_HEHE = SUPPORT_GROUP.split("me/")[1]
 
@@ -76,7 +76,7 @@ clean = {}
 autoclean = []
 
 
-START_IMG_URL = getenv("START_IMG_URL", "https://telegra.ph/file/14c7948ad180050fe16e4.jpg")
+START_IMG_URL = getenv("START_IMG_URL", "https://telegra.ph/file/f5d854c286665b64de54e.jpg")
 
 PING_IMG_URL = getenv(
     "PING_IMG_URL",
@@ -135,4 +135,4 @@ if PING_IMG_URL:
 if START_IMG_URL:
     if START_IMG_URL != "assets/Ping.jpeg":
         if not re.match("(?:http|https)://", START_IMG_URL):
-            START_IMG_URL = "https://telegra.ph/file/14c7948ad180050fe16e4.jpg"
+            START_IMG_URL = "https://telegra.ph/file/f5d854c286665b64de54e.jpg"
