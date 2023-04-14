@@ -20,19 +20,27 @@ from random import  choice, randint
 )
 async def huhh(client: Client, message: Message):
     await message.reply_photo(
-        photo=f"https://telegra.ph/file/14c7948ad180050fe16e4.jpg",
-        caption=f"""╭═★⊷⌯⧼[⌞ѕᴏụʀᴄᴇ ᴀʟᴍᴏʀᴛᴀɢᴇʟ⌝](https://t.me/AlmortagelTech)⧽⌯⊶★═╮\n★‹ [⌞ѕᴏụʀᴄᴇ ᴀʟᴍᴏʀᴛᴀɢᴇʟ⌝](https://t.me/AlmortagelTech)\n★‹ [ALMORTAGELِ](https://t.me/ALMORTAGEL_12)\n╰═★⊷⌯⧼[⌞ ѕᴏụʀᴄᴇ ᴀʟᴍᴏʀᴛᴀɢᴇʟ⌝](https://t.me/AlmortagelTech)⧽⌯⊶★═╯\n ⍟ Welcome to ѕᴏụʀᴄᴇ ᴀʟᴍᴏʀᴛᴀɢᴇʟ""",
+        photo=f"https://telegra.ph/file/d790b3a9cedeb8b6ca37e.jpg",
+        caption=f"""╭──── • ✭ • ────╮
+
+✭ [ѕᴏᴜʀᴄᴇ ѕᴇᴍᴏ](https://t.me/FTTUTY)
+
+✭ [ᴅᴇᴠ ѕᴀᴍɪʀ](https://t.me/DEV_SAMIR)
+
+╰──── • ✭ • ────╯
+
+✭ ᴛʜᴇ ʙᴇѕᴛ ѕᴏᴜʀᴄᴇ ᴏɴ ᴛᴇʟᴇɢʀᴀᴍ """,
         reply_markup=InlineKeyboardMarkup(
             [
                 [
                     InlineKeyboardButton(
-                        "ALMORTAGEL", url=f"https://t.me/ALMORTAGEL_12"), 
+                        "‹ ᴅᴇᴠ ѕᴀᴍɪʀ ›", url=f"https://t.me/DEV_SAMIR"), 
                 ],[
                     InlineKeyboardButton(
-                        "⌞ѕᴏụʀᴄᴇ ᴀʟᴍᴏʀᴛᴀɢᴇʟ⌝⚡️", url=f"https://t.me/AlmortagelTech"),
+                        "‹ 𝚜𝚘𝚞𝚛𝚌𝚎 𝚜𝚎𝚖𝚘 ›", url=f"https://t.me/DEV_SAMIR"),
                 ],[
                     InlineKeyboardButton(
-                        "للتنصيب راسلني", url=f"https://t.me/ALMORTAGEL_12"),
+                        "‹ للتنصيب راسلني ›", url=f"https://t.me/DEV_SAMIR"),
                 ],
 
             ]
