@@ -61,12 +61,12 @@ def stream_markup_timer(_, videoid, chat_id, played, dur):
         ],
         [
             InlineKeyboardButton(
-                text="⌞ ѕᴏụʀᴄᴇ ᴀʟᴍᴏʀᴛᴀɢᴇʟ ⌯ ˹🎧˼⁩", url=f"https://t.me/AlmortagelTech"
+                text="‹ 𝚜𝚘𝚞𝚛𝚌𝚎 𝚜𝚎𝚖𝚘 ›⁩", url=f"https://t.me/FTTUTY"
             )
         ],
         [
             InlineKeyboardButton(
-                text="✯ ᴄʟᴏsᴇ ✯", callback_data=f"close"
+                text="إضغط لاضافتي لمجموعتك ✅", url=f"https://t.me/{BOT_USERNAME}?startgroup=true"
             )
         ],
     ]
@@ -123,12 +123,12 @@ def telegram_markup_timer(_, chat_id, played, dur):
         ],
         [
             InlineKeyboardButton(
-                text="⌞ ѕᴏụʀᴄᴇ ᴀʟᴍᴏʀᴛᴀɢᴇʟ ⌯ ˹🎧˼⁩", url=f"https://t.me/AlmortagelTech"
+                text="‹ 𝚜𝚘𝚞𝚛𝚌𝚎 𝚜𝚎𝚖𝚘 ›⁩", url=f"https://t.me/FTTUTY"
             )
         ],
         [
             InlineKeyboardButton(
-                text="✯ ᴄʟᴏsᴇ ✯", callback_data=f"close"
+                text="إضغط لاضافتي لمجموعتك ✅", url=f"https://t.me/{BOT_USERNAME}?startgroup=true"
             )
         ],
     ]
@@ -157,12 +157,12 @@ def stream_markup(_, videoid, chat_id):
         ],
         [
             InlineKeyboardButton(
-                text="⌞ ѕᴏụʀᴄᴇ ᴀʟᴍᴏʀᴛᴀɢᴇʟ ⌯ ˹🎧˼⁩", url=f"https://t.me/AlmortagelTech"
+                text="‹ 𝚜𝚘𝚞𝚛𝚌𝚎 𝚜𝚎𝚖𝚘 ›⁩⁩", url=f"https://t.me/FTTUTY"
             )
         ],
         [
             InlineKeyboardButton(
-                text="✯ ᴄʟᴏsᴇ ✯", callback_data=f"close"
+                text="إضغط لاضافتي لمجموعتك ✅", url=f"https://t.me/{BOT_USERNAME}?startgroup=true"
             )
         ],
     ]
@@ -188,12 +188,12 @@ def telegram_markup(_, chat_id):
         ],
         [
             InlineKeyboardButton(
-                text="⌞ ѕᴏụʀᴄᴇ ᴀʟᴍᴏʀᴛᴀɢᴇʟ ⌯ ˹🎧˼⁩", url=f"https://t.me/AlmortagelTech"
+                text="‹ 𝚜𝚘𝚞𝚛𝚌𝚎 𝚜𝚎𝚖𝚘 ›⁩", url=f"https://t.me/FTTUTY"
             )
         ],
         [
             InlineKeyboardButton(
-                text="✯ ᴄʟᴏsᴇ ✯", callback_data=f"close"
+                text="إضغط لاضافتي لمجموعتك ✅", url=f"https://t.me/{BOT_USERNAME}?startgroup=true"
             )
         ],
     ]
@@ -317,7 +317,7 @@ close_keyboard = InlineKeyboardMarkup(
             [
                 [
                     InlineKeyboardButton(
-                        text="✯ ᴄʟᴏsᴇ ✯", callback_data="close"
+                        text="إضغط لاضافتي لمجموعتك ✅", url="https://t.me/FTTUTY"
                     )
                 ]    
             ]
@@ -348,12 +348,12 @@ def queue_markup(_, videoid, chat_id):
         ],
         [
             InlineKeyboardButton(
-                text="⌞ ѕᴏụʀᴄᴇ ᴀʟᴍᴏʀᴛᴀɢᴇʟ ⌯ ˹🎧˼⁩", url=f"https://t.me/AlmortagelTech"
+                text="‹ 𝚜𝚘𝚞𝚛𝚌𝚎 𝚜𝚎𝚖𝚘 ›", url=f"https://t.me/FTTUTY"
             )
         ],
         [
             InlineKeyboardButton(
-                text="✯ ᴄʟᴏsᴇ ✯", callback_data=f"close"
+                text="إضغط لاضافتي لمجموعتك ✅", url=f"https://t.me/{BOT_USERNAME}?startgroup=true"
             )
         ],
     ]
