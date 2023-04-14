@@ -36,12 +36,12 @@ def private_panel(_, BOT_USERNAME, OWNER: Union[bool, int] = None):
         ],
         [
             InlineKeyboardButton(
-                text="🌐- الاوامر -🌐", callback_data="settings_back_helper"
+                text="🤖- الاوامر -🤖", callback_data="settings_back_helper"
             )
         ],
         [
             InlineKeyboardButton(
-                text="مطور السورس 👤", url=f"https://t.me/DEV_SAMIR"
+                text="قناة السورس 🌐", url=f"https://t.me/FTTUTY"
             ),
             InlineKeyboardButton(
                 text=" مطور البوت 👤", user_id=OWNER
@@ -49,7 +49,7 @@ def private_panel(_, BOT_USERNAME, OWNER: Union[bool, int] = None):
         ],
         [
             InlineKeyboardButton(
-                text="‹ 𝚜𝚘𝚞𝚛𝚌𝚎 𝚜𝚎𝚖𝚘 ›", url=f"https://t.me/FTTUTY"
+                text="‹ مطور سورس سيمو ›⁩", url=f"https://t.me/DEV_SAMIR"
             )
         ],
      ]
