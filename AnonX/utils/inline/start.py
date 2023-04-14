@@ -29,28 +29,27 @@ def start_pannel(_, BOT_USERNAME, OWNER: Union[bool, int] = None):
 def private_panel(_, BOT_USERNAME, OWNER: Union[bool, int] = None):
     buttons = [
         [
-
-InlineKeyboardButton(
+            InlineKeyboardButton(
                 text="اضغط لاضافتي لمجموعتك✅",
                 url=f"https://t.me/{BOT_USERNAME}?startgroup=true",
-)
-],
-[
-            InlineKeyboardButton(
-                text="‹ مطور سورس سيمو ›⁩", callback_data="settings_back_helper"
             )
         ],
         [
             InlineKeyboardButton(
-                text=" قناة السورس 🌐", url=f"https://t.me/FTTUTY"
+                text="🗒 الاوامر", callback_data="settings_back_helper"
+            )
+        ],
+        [
+            InlineKeyboardButton(
+                text="✨️ ALMORTAGEL ✨️]ِ", url=f"https://t.me/ALMORTAGEL_12"
             ),
             InlineKeyboardButton(
-                text=" مطور البوت 👤", user_id=OWNER
+                text="👤 مطور البوت", user_id=OWNER
             )
         ],
         [
             InlineKeyboardButton(
-                text="اضغط لاضافتي لمجموعتك ✅", url=f"https://t.me/{BOT_USERNAME}?startgroup=true"
+                text=" ⌞ ѕᴏụʀᴄᴇ ᴀʟᴍᴏʀᴛᴀɢᴇʟ ⌝ ", url=f"https://t.me/AlmortagelTech"
             )
         ],
      ]
