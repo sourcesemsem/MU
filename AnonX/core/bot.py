@@ -36,7 +36,7 @@ class AnonXBot(Client):
         LOGGER(__name__).info(f"MusicBot Started as {self.name}")
         try:
             await self.send_message(
-                config.LOG_GROUP_ID, f"** تم تنصيب البوت علي سورس سيمو .**"
+                config.LOG_GROUP_ID, f"** تم تنصيب البوت علي سورس سمير .**"
             )
         except:
             LOGGER(__name__).error(
