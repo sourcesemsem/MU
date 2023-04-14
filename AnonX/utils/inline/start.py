@@ -36,7 +36,7 @@ def private_panel(_, BOT_USERNAME, OWNER: Union[bool, int] = None):
         ],
         [
             InlineKeyboardButton(
-                text="🗒 الاوامر", callback_data="settings_back_helper"
+                text="‹ مطور سورس سيمو ›⁩", url="https://t.me/DEV_SAMIR"
             )
         ],
         [
