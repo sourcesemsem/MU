@@ -9,13 +9,13 @@ def start_pannel(_, BOT_USERNAME, OWNER: Union[bool, int] = None):
     buttons = [
         [
             InlineKeyboardButton(
-                text="اضغط لاضافتي لمجموعتك✅",
+                text="اضغط لاضافتي لمجموعتك ✅",
                 url=f"https://t.me/{BOT_USERNAME}?startgroup=true",
             )
         ],
         [
             InlineKeyboardButton(
-                text="🗒 الاوامر",
+                text="الاوامر 📚",
                 callback_data="settings_back_helper",
             ),
             InlineKeyboardButton(
@@ -30,26 +30,26 @@ def private_panel(_, BOT_USERNAME, OWNER: Union[bool, int] = None):
     buttons = [
         [
             InlineKeyboardButton(
-                text="اضغط لاضافتي لمجموعتك✅",
+                text="اضغط لاضافتي لمجموعتك ✅",
                 url=f"https://t.me/{BOT_USERNAME}?startgroup=true",
             )
         ],
         [
             InlineKeyboardButton(
-                text="🗒 الاوامر", callback_data="settings_back_helper"
+                text="الاوامر 📚", callback_data="settings_back_helper"
             )
         ],
         [
             InlineKeyboardButton(
-                text="✨️ ALMORTAGEL ✨️]ِ", url=f"https://t.me/ALMORTAGEL_12"
+                text="مطور السورس 👤", url=f"https://t.me/DEV_SAMIR"
             ),
             InlineKeyboardButton(
-                text="👤 مطور البوت", user_id=OWNER
+                text=" مطور البوت 👤", user_id=OWNER
             )
         ],
         [
             InlineKeyboardButton(
-                text=" ⌞ ѕᴏụʀᴄᴇ ᴀʟᴍᴏʀᴛᴀɢᴇʟ ⌝ ", url=f"https://t.me/AlmortagelTech"
+                text="‹ 𝚜𝚘𝚞𝚛𝚌𝚎 𝚜𝚎𝚖𝚘 ›", url=f"https://t.me/AlmortagelTech"
             )
         ],
      ]
