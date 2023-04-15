@@ -16,7 +16,7 @@ from random import  choice, randint
 #          
                 
 @app.on_message(
-    command(["المطور","سمير","مطور السورس","المطور شنير"])
+    command(["المبرمج","سمير","مطور السورس","مبرمج السورس"])
     & ~filters.edited
 )
 async def huhh(client: Client, message: Message):
