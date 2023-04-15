@@ -31,7 +31,9 @@ async def huhh(client: Client, message: Message):
                 [
                     InlineKeyboardButton(
                         "᳒ᴅᴇᴠ ѕᴀᴍɪʀ", user_id=OWNER 
-                 ],[
+                                 ) 
+                 ],
+                 [
                    InlineKeyboardButton(
                         "⌞ 𝚜𝚘𝚞𝚛𝚌𝚎 𝚜𝚎𝚖𝚘 ⌝", url=f"https://t.me/FTTUTY"),
                 ],
