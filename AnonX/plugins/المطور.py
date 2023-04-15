@@ -30,8 +30,7 @@ async def huhh(client: Client, message: Message):
             [
                 [
                     InlineKeyboardButton(
-                        "᳒ᴅᴇᴠ ѕᴀᴍɪʀ", user_id=OWNER 
-                                 ) 
+                        "᳒ᴅᴇᴠ ѕᴀᴍɪʀ", "https://t.me/{OWNER}",
                  ],
                  [
                    InlineKeyboardButton(
