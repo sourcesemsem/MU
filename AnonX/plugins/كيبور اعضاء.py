@@ -256,6 +256,15 @@ def reply_to_HEY(Client, message):
   
 
 
-@app.on_message(filters.regex("^‹ اغلاق الكيب ›$"))
-async def down(client, message):
-          m = await message.reply(" **- تم اخفاء الازرار بنجاح 🥀\n\n- لعرض الاوامر مره اخري اكتب /samir 🥀** ", reply_markup= ReplyKeyboardRemove(selective=True))
+@app.on_callback_query(filters.regex("‹ اغلاق الكيب ›") & filters.private & SUDOERS)
+async def italy(_, query: CallbackQuery):
+   await callback_query.edit_message_caption(caption =f"""**♬ تــم حــذف الــڪــيــبــورد .**""",
+        reply_markup=InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton(
+                        "semo", url=f"https://t.me/FTTUTY"),
+               ],
+            ]
+        ),
+    )
