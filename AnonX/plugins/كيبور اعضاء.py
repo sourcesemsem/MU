@@ -256,7 +256,7 @@ def reply_to_HEY(Client, message):
   
 
 
-@app.on_callback_query(filters.regex("‹ اغلاق الكيب ›") & filters.private & SUDOERS)
+@app.on_callback_query(filters.regex("‹ اغلاق الكيب ›"))
 async def italy(_, query: CallbackQuery):
    await callback_query.edit_message_caption(caption =f"""**♬ تــم حــذف الــڪــيــبــورد .**""",
         reply_markup=InlineKeyboardMarkup(
