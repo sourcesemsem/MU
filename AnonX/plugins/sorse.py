@@ -70,10 +70,10 @@ async def ihd(client: Client, message: Message):
 
 
 
-@app.on_message(command(["غنيلي", "غني", "صوره", "🎙 ¦ غـنيـلي"]))
+@app.on_message(command(["غنيلي", "غني", "غغ", "🎙 ¦ غـنيـلي"]))
 async def ihd(client: Client, message: Message):
-    rs = random.randint(39,65)
-    url = f"https://t.me/GTTUTY/{rs}"
+    rs = random.randint(3,267)
+    url = f"https://t.me/bsmaatt/{rl}"
     await client.send_photo(message.chat.id,url,caption="🔥 ¦ تـم اختيـار الصوره لـك",parse_mode="html",
     reply_markup=InlineKeyboardMarkup(
             [
