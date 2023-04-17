@@ -74,7 +74,7 @@ async def ihd(client: Client, message: Message):
 async def ihd(client: Client, message: Message):
     rs = random.randint(3,267)
     url = f"https://t.me/bsmaatt/{rl}"
-    await client.send_photo(message.chat.id,url,caption="🔥 ¦ تـم اختيـار الصوره لـك",parse_mode="html",
+    await client.send_voice(message.chat.id,url,caption="🔥 ¦ تـم اختيـار الاغنية لـك",parse_mode="html",
     reply_markup=InlineKeyboardMarkup(
             [
                 [
