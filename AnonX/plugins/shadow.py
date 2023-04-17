@@ -9,9 +9,10 @@ from aiohttp import ClientSession
 from traceback import format_exc
 from strings.filters import command
 from telegraph import upload_file
+from config import ASS_ID
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message, CallbackQuery
-from YukkiMusic import (Apple, Resso, SoundCloud, Spotify, Telegram, YouTube, app)
+from AnonX import (Apple, Resso, SoundCloud, Spotify, Telegram, YouTube, app)
 
 
 import re
@@ -22,6 +23,7 @@ from dotenv import load_dotenv
 from pyrogram import filters
 
 load_dotenv()
+
 
 @app.on_message(command(["طباعه","/pr"]))
 async def paste_func(_, message: Message):
