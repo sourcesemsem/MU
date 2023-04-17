@@ -4,12 +4,10 @@ import re
 import requests
 from pyrogram import Client, filters
 from strings import get_command
-from gpytranslate import Translator
 from aiohttp import ClientSession
 from traceback import format_exc
 from strings.filters import command
 from telegraph import upload_file
-from config import ASS_ID
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message, CallbackQuery
 from AnonX import (Apple, Resso, SoundCloud, Spotify, Telegram, YouTube, app)
