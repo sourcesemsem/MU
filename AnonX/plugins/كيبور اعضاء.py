@@ -38,6 +38,11 @@ REPLY_MESSAGE_BUTTONS = [
     [
         ("⌔كـتـبـات⌔"),
         ("⌔انـصـحـنـي⌔")
+],
+[
+
+(‹ اغلاق الكيب ›)
+
     ]
 ]
 
@@ -54,7 +59,7 @@ async def music(client: Client, message: Message):
     )
 
 
-@app.on_message(filters.regex("︙ابـراج︙"))
+@app.on_message(filters.regex("︙اراج︙"))
 def reply_to_HEY(Client, message):
     message.reply_photo(
         photo=f"https://telegra.ph/file/bed2cbf98e17acf79530b.jpg",
@@ -85,7 +90,7 @@ def reply_to_HEY(Client, message):
   )
   
 
-@app.on_message(filters.regex("حـروف⌔"))
+@app.on_message(filters.regex("ـوف⌔"))
 def reply_to_HEY(Client, message):
     message.reply_photo(
         photo=f"https://telegra.ph/file/390a9dc663f89bd288a58.jpg",
@@ -145,7 +150,7 @@ def reply_to_HEY(Client, message):
   )
 
 
-@app.on_message(filters.regex("⌔كتـبـات⌔"))
+@app.on_message(filters.regex("⌔ك تـبـات⌔"))
 def reply_to_HEY(Client, message):
     message.reply_photo(
         photo=f"https://telegra.ph/file/11bb465f33e166f0cd368.jpg",
@@ -249,3 +254,8 @@ def reply_to_HEY(Client, message):
      )
   )
   
+
+
+@app.on_message(filters.regex("^‹ اخفاء الازرار ›$"))
+async def down(client, message):
+          m = await message.reply(" **- تم اخفاء الازرار بنجاح 🥀\n\n- لعرض الاوامر مره اخري اكتب /samir 🥀** ", reply_markup= ReplyKeyboardRemove(selective=True))
