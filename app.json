@@ -13,37 +13,37 @@
     ],
     "env": {
       "API_ID": {
-        "description": "Get this value from https://my.telegram.org",
+        "description": "ايبي ايدي المساعد » @FTTUTT7 « قناة شرح  » https://my.telegram.org « الموقع ",
         "value": "",
         "required": true
       },
       "API_HASH": {
-        "description": "Get this value from https://my.telegram.org",
+        "description": "ايبي هاش المساعد » @FTTUTT7 « قناة شرح https://my.telegram.org  « الموقع",
         "value": "",
         "required": true
       },
       "BOT_TOKEN": {
-        "description": "A Bot's token from Botfather",
+        "description": "هناا توكن بوتك ",
         "value": "",
         "required": true
       },
       "MONGO_DB_URI": {
-        "description": "حط هنا كود المونجو .",
+        "description": "حط هنا كود المونجو لو معندكش سيب ده.",
         "value": "mongodb+srv://islam2005:islam2005@cluster0.rdjot.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
         "required": false
       },
       "MUSIC_BOT_NAME": {
-        "description": "A name for your Music Bot. You can use special characters bot ko jhaat farak ni padega",
+        "description": "ضع اسم بوتك",
         "value": "سيمو",
         "required": true
       },
       "OWNER_ID": {
-        "description": "The user id(s) of user(s) whom you would like to add as a OWNER. Multiple values shall be seperated with a space.",
+        "description": "ضع ايدي المطور",
         "value": "",
         "required": true
       },
       "STRING_SESSION": {
-        "description": "A Pyrogram String Session. One Assistant is Compulsory.",
+        "description": "جلسة بايروجرام المساعد ",
         "value": "",
         "required": true
       },
