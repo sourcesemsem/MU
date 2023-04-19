@@ -53,12 +53,13 @@
         "required": false
       },
       "HEROKU_APP_NAME": {
-        "description": "Your heroku app/bot's name",
+        "description": "ضع اول اسم كمت بكتابة في اول خانه",
         "value": "",
         "required": false
       },
       "LOG_GROUP_ID": {
-        "description": "Your Log Group ID, add your bot and promote as an admin with full rights!. Channel ki id mat daal dena bsdk.",
+        "description": "قم بأنشاء جروب  وضيف المساعد والبوت وارفعهم مشرف وضع ايدي الجروب اللذي يبدأ ب 100-
+لجلب ايدي الجروب ضيف البوت هذا واكتب ايدي  الجروب @semo15sbot",
         "value": "",
         "required": true
       }
